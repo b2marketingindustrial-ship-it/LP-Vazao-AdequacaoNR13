@@ -1,0 +1,36 @@
+---
+/**
+ * Composição da página. Sem conteúdo aqui: copy em src/data/content.ts, dados globais em src/data/site.ts.
+ * Ordem das seções = blueprint do PROMPT-PADRAO-LP (item 4). Header, Hero, QuoteForm e Footer são estrutura fixa (4.1).
+ */
+import Layout from '../layouts/Layout.astro'
+import Header from '../components/Header.astro'
+import Hero from '../components/Hero.astro'
+import ProductLines from '../components/ProductLines.astro'
+import SupportPanel from '../components/SupportPanel.astro'
+import ApplicationsGallery from '../components/ApplicationsGallery.astro'
+import SegmentsShowcase from '../components/SegmentsShowcase.astro'
+import WhyBrand from '../components/WhyBrand.astro'
+import QuoteForm from '../components/QuoteForm.astro'
+import Footer from '../components/Footer.astro'
+---
+
+<Layout>
+  <Header />
+
+  <main id="main">
+    <Hero>
+      <Fragment slot="shortcode">[atendimento_chat id="default"]</Fragment>
+    </Hero>
+    <ProductLines />
+    <SupportPanel />
+    <ApplicationsGallery />
+    <SegmentsShowcase />
+    <WhyBrand />
+    <QuoteForm>
+      <Fragment slot="shortcode">[atendimento_form id="default-form"]</Fragment>
+    </QuoteForm>
+  </main>
+
+  <Footer />
+</Layout>

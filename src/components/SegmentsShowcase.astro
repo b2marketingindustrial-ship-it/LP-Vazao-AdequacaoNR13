@@ -1,0 +1,260 @@
+---
+import { Image } from 'astro:assets'
+import Icon from './Icon.astro'
+import Eyebrow from './Eyebrow.astro'
+import Button from './Button.astro'
+import { segments, cta } from '../data/content'
+
+const items = segments.items
+const first = items[0].id
+---
+
+<section id="segmentos" class="bg-neutral-gray-100 py-16" data-segments>
+  <div class="mx-auto max-w-page px-6 lg:px-10">
+    <div class="max-w-2xl">
+      <Eyebrow>{segments.eyebrow}</Eyebrow>
+      <h2 class="mt-3 font-display text-3xl leading-tight font-extrabold text-ink sm:text-4xl">
+        {segments.title}
+      </h2>
+      <p class="mt-3 font-sans text-[15px] leading-relaxed text-ink-soft">{segments.text}</p>
+    </div>
+
+    <div class="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[260px_minmax(0,1fr)_minmax(0,1fr)] lg:items-stretch lg:gap-8 xl:grid-cols-[280px_minmax(0,1fr)_minmax(0,1fr)] xl:gap-10">
+      {/* Coluna 1 — tabs */}
+      <div class="flex min-w-0 flex-col">
+        <div
+          role="tablist"
+          aria-label={segments.eyebrow}
+          aria-orientation="vertical"
+          class="scroll-track -mx-6 flex max-w-[calc(100%+3rem)] gap-1.5 overflow-x-auto px-6 pb-2 lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0 lg:pb-0"
+        >
+          {items.map((segment) => (
+            <button
+              type="button"
+              role="tab"
+              id={`tab-${segment.id}`}
+              aria-controls={`panel-${segment.id}`}
+              aria-selected={segment.id === first ? 'true' : 'false'}
+              tabindex={segment.id === first ? 0 : -1}
+              data-segment={segment.id}
+              class="segment-tab group relative flex shrink-0 items-center gap-3 overflow-hidden rounded-xl border border-neutral-gray-200/70 bg-neutral-light px-3.5 py-2.5 text-left font-sans text-[13.5px] font-semibold whitespace-nowrap text-ink shadow-[0_1px_2px_rgba(13,29,48,0.05)] transition-[background-color,color,border-color,transform] duration-200 hover:border-accent-orange/50 lg:w-full lg:whitespace-normal"
+            >
+              <span
+                aria-hidden="true"
+                class="segment-tab__bar absolute inset-y-0 left-0 w-[3px] origin-bottom scale-y-0 bg-accent-orange transition-transform duration-300 ease-out"
+              />
+              <Icon name={segment.icon} class="size-4 shrink-0 text-accent-orange" />
+              <span class="flex-1">{segment.label}</span>
+              <Icon
+                name="chevron-right"
+                class="segment-tab__chevron size-4 shrink-0 text-ink/35 transition-[color,transform] duration-200 group-hover:translate-x-0.5"
+              />
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Coluna 2 — painel visual */}
+      <div class="relative min-h-[280px] min-w-0 overflow-hidden rounded-2xl sm:min-h-[340px] lg:min-h-0">
+        {items.map((segment, i) => (
+          <div
+            data-visual={segment.id}
+            hidden={segment.id !== first}
+            class="segment-visual absolute inset-0"
+          >
+            {segment.photo ? (
+              <>
+                <Image
+                  src={segment.photo.src}
+                  alt={segment.photo.alt}
+                  format="webp"
+                  width={900}
+                  loading="lazy"
+                  decoding="async"
+                  class="h-full w-full object-cover object-center"
+                />
+                <span
+                  aria-hidden="true"
+                  class="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary-dark-900/70 via-primary-dark-900/10 to-transparent"
+                />
+              </>
+            ) : (
+              <div class="navy-premium relative h-full w-full">
+                <span
+                  aria-hidden="true"
+                  class="blueprint-grid pointer-events-none absolute inset-0"
+                />
+                <span
+                  aria-hidden="true"
+                  class="pointer-events-none absolute -top-24 -left-20 size-72 rounded-full bg-accent-orange/15 blur-3xl"
+                />
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="glass-badge flex size-24 items-center justify-center rounded-full text-neutral-light">
+                    <Icon name={segment.icon} class="size-10" />
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {/* Corte diagonal laranja no canto inferior direito */}
+            <span
+              aria-hidden="true"
+              class="segment-cut pointer-events-none absolute right-0 bottom-0 h-full w-[38%] bg-accent-orange/85"
+            />
+
+            <div class="absolute bottom-5 left-6 z-[2] flex items-center gap-3">
+              <span class="font-display text-[11px] font-extrabold tracking-[0.2em] text-neutral-light/80">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <span aria-hidden="true" class="h-px w-8 bg-neutral-light/40" />
+              <span class="font-sans text-[12px] font-semibold tracking-[0.12em] text-neutral-light uppercase">
+                {segment.label}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Coluna 3 — detalhe */}
+      <div class="relative min-w-0 lg:py-1">
+        {items.map((segment) => (
+          <div
+            role="tabpanel"
+            id={`panel-${segment.id}`}
+            aria-labelledby={`tab-${segment.id}`}
+            data-panel={segment.id}
+            hidden={segment.id !== first}
+            class="segment-panel flex flex-col items-start"
+          >
+            <span class="flex size-14 items-center justify-center rounded-full border-2 border-accent-orange text-accent-orange">
+              <Icon name={segment.icon} class="size-6" />
+            </span>
+
+            <h3 class="mt-4 font-display text-2xl leading-tight font-extrabold text-ink lg:text-[28px]">
+              {segment.label}
+            </h3>
+
+            <span aria-hidden="true" class="mt-3 h-[3px] w-12 bg-accent-orange" />
+
+            <p class="mt-3 font-sans text-[15px] leading-relaxed text-ink-soft">
+              {segment.description}
+            </p>
+
+            <ul class="mt-4 flex flex-col gap-2">
+              {segment.bullets.map((bullet) => (
+                <li class="flex items-center gap-3 font-sans text-[15px] font-medium text-ink">
+                  <span class="flex size-5 shrink-0 items-center justify-center rounded-full bg-accent-orange/10 text-accent-orange">
+                    <Icon name="check" class="size-3" />
+                  </span>
+                  {bullet}
+                </li>
+              ))}
+            </ul>
+
+            <Button cta={`segmentos-${segment.id}`} variant="primary" class="mt-6">
+              {cta.primary}
+            </Button>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .segment-tab[aria-selected='true'] {
+    background-color: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+    color: var(--color-neutral-light);
+  }
+
+  .segment-tab[aria-selected='true'] .segment-tab__bar {
+    transform: scaleY(1);
+  }
+
+  .segment-tab[aria-selected='true'] .segment-tab__chevron {
+    color: var(--color-accent-orange);
+    transform: translateX(2px);
+  }
+
+  .segment-cut {
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    mix-blend-mode: multiply;
+    opacity: 0.9;
+  }
+
+  .segment-visual,
+  .segment-panel {
+    animation: segment-in 320ms ease-out both;
+  }
+
+  @keyframes segment-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .segment-visual,
+    .segment-panel {
+      animation: none;
+    }
+
+    .segment-tab,
+    .segment-tab * {
+      transition: none !important;
+    }
+  }
+</style>
+
+<script>
+  const roots = document.querySelectorAll<HTMLElement>('[data-segments]')
+
+  roots.forEach((root) => {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[role="tab"]'))
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-panel]'))
+    const visuals = Array.from(root.querySelectorAll<HTMLElement>('[data-visual]'))
+
+    const activate = (id: string, focus = false) => {
+      tabs.forEach((tab) => {
+        const active = tab.dataset.segment === id
+        tab.setAttribute('aria-selected', active ? 'true' : 'false')
+        tab.tabIndex = active ? 0 : -1
+        if (active && focus) tab.focus()
+        if (active) tab.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+      })
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.panel !== id
+      })
+      visuals.forEach((visual) => {
+        visual.hidden = visual.dataset.visual !== id
+      })
+    }
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => activate(tab.dataset.segment ?? ''))
+
+      tab.addEventListener('keydown', (event) => {
+        const next =
+          event.key === 'ArrowDown' || event.key === 'ArrowRight'
+            ? index + 1
+            : event.key === 'ArrowUp' || event.key === 'ArrowLeft'
+              ? index - 1
+              : event.key === 'Home'
+                ? 0
+                : event.key === 'End'
+                  ? tabs.length - 1
+                  : null
+        if (next === null) return
+        event.preventDefault()
+        const target = tabs[(next + tabs.length) % tabs.length]
+        activate(target.dataset.segment ?? '', true)
+      })
+    })
+  })
+</script>
