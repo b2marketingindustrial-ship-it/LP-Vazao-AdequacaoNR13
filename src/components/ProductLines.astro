@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets'
 import Icon from './Icon.astro'
-import BrandCarousel from './BrandCarousel.astro'
 import Eyebrow from './Eyebrow.astro'
 import { productLines, cta } from '../data/content'
 
@@ -10,20 +9,14 @@ const lines = productLines.items
 
 <section id="linhas" class="bg-neutral-light pt-20 pb-10">
   <div class="mx-auto max-w-page px-6 lg:px-10">
-    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-      <div class="max-w-xl">
-        <Eyebrow>{productLines.eyebrow}</Eyebrow>
-        <h2 class="mt-3 font-display text-3xl leading-tight font-extrabold text-ink sm:text-4xl">
-          {productLines.title}
-        </h2>
-        <p class="mt-3 max-w-[330px] font-sans text-[15px] leading-relaxed text-ink-soft">
-          {productLines.text}
-        </p>
-      </div>
-
-      <div class="min-w-0 flex-1 sm:pl-10">
-        <BrandCarousel />
-      </div>
+    <div class="max-w-2xl">
+      <Eyebrow>{productLines.eyebrow}</Eyebrow>
+      <h2 class="mt-3 font-display text-3xl leading-tight font-extrabold text-ink sm:text-4xl">
+        {productLines.title}
+      </h2>
+      <p class="mt-3 max-w-[330px] font-sans text-[15px] leading-relaxed text-ink-soft">
+        {productLines.text}
+      </p>
     </div>
 
     <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">

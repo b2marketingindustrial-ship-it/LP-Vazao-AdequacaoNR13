@@ -7,18 +7,23 @@
  * 4 aplicações, 8 segmentos, 5 diferenciais, 3 selos): `npm run check` acusa
  * se faltar ou sobrar item.
  *
- * Conteúdo atual = exemplo de referência (LP Pioneira Rolamentos) com imagens
- * placeholder. Substitua tudo.
+ * LP de SERVIÇO INDUSTRIAL (mapa 3.1 do PROMPT-PADRAO-LP): "Linhas de produto" vira
+ * "Serviços", "Painel de apoio" vira "Como funciona", "Aplicações" vira "Onde atuamos".
+ * Sem carrossel de marcas — nenhum logo de cliente/certificação foi informado no briefing
+ * (docs/BRIEFING.md, entrada 6).
+ *
+ * Fotos ainda são os placeholders do template (mesmo aspect-ratio das seções reais).
+ * Substituir pelos arquivos reais quando o cliente anexar (ver docs/BRIEFING.md > Assets).
  */
 import type { ImageMetadata } from 'astro'
 import type { IconName } from './icons'
 import { site } from './site'
 
 import heroBg from '../assets/heroBg.png'
-import linha1 from '../assets/products/linha-1.png'
-import linha2 from '../assets/products/linha-2.png'
-import linha3 from '../assets/products/linha-3.png'
-import marcasPhoto from '../assets/products/marcas.png'
+import servico1 from '../assets/products/linha-1.png'
+import servico2 from '../assets/products/linha-2.png'
+import servico3 from '../assets/products/linha-3.png'
+import servico4 from '../assets/products/marcas.png'
 import app1 from '../assets/applications/aplicacao-1.png'
 import app2 from '../assets/applications/aplicacao-2.png'
 import app3 from '../assets/applications/aplicacao-3.png'
@@ -31,12 +36,6 @@ import seg5 from '../assets/segmentos/segmento-5.png'
 import seg6 from '../assets/segmentos/segmento-6.png'
 import seg7 from '../assets/segmentos/segmento-7.png'
 import seg8 from '../assets/segmentos/segmento-8.png'
-import marca1 from '../assets/brands/marca-1.webp'
-import marca2 from '../assets/brands/marca-2.webp'
-import marca3 from '../assets/brands/marca-3.webp'
-import marca4 from '../assets/brands/marca-4.webp'
-import marca5 from '../assets/brands/marca-5.webp'
-import marca6 from '../assets/brands/marca-6.webp'
 import cenario from '../assets/cenario.jpg'
 import pessoa from '../assets/pessoa.png'
 
@@ -104,14 +103,25 @@ export interface Brand {
 
 /* ----------------------------------------------------------- vocabulário */
 
-/** Vocabulário fixo de CTA (PROMPT-PADRAO-LP, item 8). Não variar. */
+/**
+ * Vocabulário fixo de CTA (PROMPT-PADRAO-LP, item 8), com a variação do CTA secundário
+ * prevista na tabela 3.1 para "serviço industrial" ("Agende uma visita técnica" no lugar
+ * de "Identifique seu produto").
+ */
 export const cta = {
   primary: 'Solicite sua cotação',
   primaryShort: 'Cotação',
-  secondary: 'Identifique seu produto',
+  secondary: 'Agende uma visita técnica',
   card: 'Falar com especialista',
   whatsapp: 'Chamar no WhatsApp',
 } as const
+
+/**
+ * Marcas/clientes (entrada 6). Vazia: nenhum logo de cliente ou certificação foi informado no
+ * briefing, então o carrossel foi removido de ProductLines.astro (mapa 3.1, "serviço industrial").
+ * Preencher aqui se o cliente enviar logos depois — o componente do carrossel precisaria voltar.
+ */
+export const brands = [] as const satisfies readonly Brand[]
 
 /* ------------------------------------------------------------------ header */
 
@@ -122,17 +132,17 @@ export const header = {
 /* -------------------------------------------------------------------- hero */
 
 export const hero = {
-  eyebrow: 'Manutenção Industrial',
-  title: `${site.product} para ${site.context}`,
-  text: 'Soluções para diferentes aplicações industriais, com apoio na identificação, especificação e cotação.',
+  eyebrow: 'Engenharia e Adequação NR13',
+  title: 'Adequação NR13 para os equipamentos da sua indústria',
+  text: 'Levantamento, laudo técnico, projeto e execução para manter vasos de pressão, caldeiras e tubulações em conformidade com a NR13.',
   banner: {
     src: heroBg,
-    alt: 'Produto industrial em destaque sobre fundo técnico',
+    alt: 'Equipamento industrial em destaque sobre fundo técnico',
   },
   points: [
-    { icon: 'shield', line1: 'Produtos para', line2: 'aplicações industriais' },
-    { icon: 'gear', line1: 'Marca A, Marca B', line2: 'e Marca C' },
-    { icon: 'truck', line1: 'Atendimento B2B', line2: 'para manutenção' },
+    { icon: 'shield', line1: 'Conformidade com', line2: 'a NR13' },
+    { icon: 'factory', line1: 'Vasos, caldeiras', line2: 'e tubulações' },
+    { icon: 'badge-check', line1: 'Desde 1991 em', line2: 'engenharia industrial' },
   ],
 } as const satisfies {
   eyebrow: string
@@ -142,58 +152,47 @@ export const hero = {
   points: readonly [HeroPoint, HeroPoint, HeroPoint]
 }
 
-/* ------------------------------------------------------------------ marcas */
-
-export const brands = [
-  { name: 'Marca 1', src: marca1 },
-  { name: 'Marca 2', src: marca2 },
-  { name: 'Marca 3', src: marca3 },
-  { name: 'Marca 4', src: marca4 },
-  { name: 'Marca 5', src: marca5 },
-  { name: 'Marca 6', src: marca6 },
-] as const satisfies readonly Brand[]
-
-/* -------------------------------------------------------- linhas de produto */
+/* ------------------------------------------------------------------ serviços */
 
 export const productLines = {
-  eyebrow: 'Linhas de produto',
-  title: 'Linhas de produto',
-  text: 'Soluções para diferentes aplicações industriais, com as principais marcas do mercado.',
+  eyebrow: 'Serviços',
+  title: 'Serviços de Adequação NR13',
+  text: 'Da identificação dos equipamentos enquadrados até a manutenção da conformidade ao longo do tempo.',
   items: [
     {
-      id: 'linha-1',
-      tag: 'Linha 1',
-      title: 'Linha de produto 1',
-      description: 'Para equipamentos de alta rotação e operação contínua.',
-      photo: { src: linha1, alt: 'Produto da linha 1' },
-      features: ['Alta rotação', 'Baixo atrito', 'Diversas aplicações'],
+      id: 'levantamento-laudo',
+      tag: 'Diagnóstico',
+      title: 'Levantamento e Laudo Técnico',
+      description: 'Diagnóstico completo dos equipamentos e emissão do laudo técnico.',
+      photo: { src: servico1, alt: 'Equipamento industrial sendo inspecionado em campo' },
+      features: ['Levantamento de campo', 'Laudo técnico', 'Conformidade NR13'],
       dark: false,
     },
     {
-      id: 'linha-2',
-      tag: 'Linha 2',
-      title: 'Linha de produto 2',
-      description: 'Indicada para cargas elevadas e condições operacionais severas.',
-      photo: { src: linha2, alt: 'Produto da linha 2' },
-      features: ['Altas cargas', 'Maior robustez', 'Aplicações severas'],
+      id: 'projeto-adequacao',
+      tag: 'Projeto',
+      title: 'Projeto de Adequação',
+      description: 'Elaboração do projeto técnico para adequar os equipamentos à norma.',
+      photo: { src: servico2, alt: 'Projeto técnico de adequação de equipamento industrial' },
+      features: ['Projeto técnico', 'Memorial descritivo', 'ART/RRT'],
       dark: false,
     },
     {
-      id: 'linha-3',
-      tag: 'Linha 3',
-      title: 'Linha de produto 3',
-      description: 'Soluções para necessidades que exigem configurações específicas.',
-      photo: { src: linha3, alt: 'Produto da linha 3' },
-      features: ['Soluções sob medida', 'Ambientes extremos', 'Aplicações específicas'],
+      id: 'execucao-adequacao',
+      tag: 'Execução',
+      title: 'Execução da Adequação',
+      description: 'Implantação física dos ajustes identificados no laudo.',
+      photo: { src: servico3, alt: 'Execução de ajustes técnicos em equipamento industrial' },
+      features: ['Instalação de dispositivos', 'Sinalização', 'Ajustes estruturais'],
       dark: false,
     },
     {
-      id: 'marcas',
-      tag: 'Marcas',
-      title: 'Produtos por marca',
-      description: 'Marca A, Marca B, Marca C e outras com pronta disponibilidade.',
-      photo: { src: marcasPhoto, alt: 'Caixas de produto das principais marcas' },
-      features: ['As principais marcas', 'Disponibilidade imediata', 'Suporte na especificação'],
+      id: 'acompanhamento-recertificacao',
+      tag: 'Contratos',
+      title: 'Acompanhamento e Recertificação',
+      description: 'Gestão contínua para manter os equipamentos em conformidade.',
+      photo: { src: servico4, alt: 'Equipe de engenharia acompanhando manutenção periódica' },
+      features: ['PMOC', 'Inspeções periódicas', 'Renovação de laudo'],
       dark: true,
     },
   ],
@@ -206,20 +205,20 @@ export const productLines = {
     | readonly [ProductLine, ProductLine, ProductLine, ProductLine]
 }
 
-/* --------------------------------------------------------- painel de apoio */
+/* --------------------------------------------------------- como funciona */
 
 export const supportPanel = {
-  eyebrow: 'Apoio na identificação',
-  title: 'Precisa identificar um produto?',
-  text: 'Não precisa ter todos os dados em mãos. Envie o que você tiver e nossa equipe identifica o modelo correto para a sua aplicação.',
-  microcopy: 'Retorno com apoio técnico especializado',
+  eyebrow: 'Como funciona',
+  title: 'Como funciona a Adequação NR13?',
+  text: 'Um processo estruturado, do diagnóstico em campo até a recertificação, para manter seus equipamentos em conformidade com a norma.',
+  microcopy: 'Acompanhamento com apoio técnico especializado',
   items: [
-    { icon: 'barcode', label: 'Referência', hint: 'ou código gravado' },
-    { icon: 'tag', label: 'Marca', hint: 'do fabricante' },
-    { icon: 'camera', label: 'Foto', hint: 'do produto' },
-    { icon: 'ruler', label: 'Medidas', hint: 'diâmetro e largura' },
-    { icon: 'factory', label: 'Equipamento', hint: 'onde é aplicado' },
-    { icon: 'target', label: 'Aplicação', hint: 'carga e rotação' },
+    { icon: 'search', label: 'Levantamento de Campo', hint: 'diagnóstico dos equipamentos' },
+    { icon: 'file-text', label: 'Laudo Técnico', hint: 'diagnóstico de conformidade' },
+    { icon: 'ruler', label: 'Projeto de Adequação', hint: 'ajustes necessários' },
+    { icon: 'wrench', label: 'Execução', hint: 'implantação em campo' },
+    { icon: 'clock', label: 'Acompanhamento', hint: 'PMOC e inspeções periódicas' },
+    { icon: 'badge-check', label: 'Recertificação', hint: 'renovação dentro do prazo' },
   ],
 } as const satisfies {
   eyebrow: string
@@ -229,36 +228,36 @@ export const supportPanel = {
   items: readonly [SupportItem, SupportItem, SupportItem, SupportItem, SupportItem, SupportItem]
 }
 
-/* -------------------------------------------------------------- aplicações */
+/* -------------------------------------------------------------- onde atuamos */
 
 export const applications = {
-  eyebrow: 'Aplicações',
-  title: 'Produtos para diferentes aplicações industriais',
-  text: 'Componentes destinados à manutenção e reposição em máquinas e equipamentos utilizados em diferentes processos industriais.',
+  eyebrow: 'Onde atuamos',
+  title: 'Equipamentos enquadrados na NR13',
+  text: 'Atuação nos principais tipos de equipamento sujeitos à norma, com diagnóstico e adequação sob medida para cada caso.',
   items: [
     {
-      id: 'motores',
-      label: 'Motores Elétricos',
-      description: 'Aplicações em motores e conjuntos rotativos.',
-      photo: { src: app1, alt: 'Motor elétrico industrial' },
+      id: 'vasos-pressao',
+      label: 'Vasos de Pressão',
+      description: 'Vasos com fluidos classe A ou produto P·V superior a 8.',
+      photo: { src: app1, alt: 'Vaso de pressão industrial vertical' },
     },
     {
-      id: 'bombas',
-      label: 'Bombas',
-      description: 'Aplicações em bombas e sistemas industriais.',
-      photo: { src: app2, alt: 'Bomba centrífuga industrial' },
+      id: 'caldeiras',
+      label: 'Caldeiras',
+      description: 'Equipamentos enquadrados entre os geradores de vapor da NR13.',
+      photo: { src: app2, alt: 'Caldeira industrial em planta fabril' },
     },
     {
-      id: 'redutores',
-      label: 'Redutores',
-      description: 'Sistemas de transmissão e redução.',
-      photo: { src: app3, alt: 'Redutor de velocidade industrial' },
+      id: 'tubulacoes',
+      label: 'Tubulações e Sistemas de Tubulações',
+      description: 'Interligadas a caldeiras ou vasos de pressão com fluidos classe A ou B.',
+      photo: { src: app3, alt: 'Conjunto de tubulações industriais' },
     },
     {
-      id: 'transportadores',
-      label: 'Transportadores',
-      description: 'Sistemas de movimentação e transporte industrial.',
-      photo: { src: app4, alt: 'Esteira transportadora de rolos' },
+      id: 'tanques',
+      label: 'Tanques de Armazenamento',
+      description: 'Tanques listados entre os equipamentos enquadrados na NR13.',
+      photo: { src: app4, alt: 'Tanques de armazenamento industrial' },
     },
   ],
 } as const satisfies {
@@ -272,88 +271,80 @@ export const applications = {
 
 export const segments = {
   eyebrow: 'Segmentos atendidos',
-  title: 'Soluções para manutenção industrial',
-  text: 'Produtos e apoio técnico para diferentes processos produtivos.',
+  title: 'Adequação NR13 para diferentes indústrias',
+  text: 'Equipamentos enquadrados na NR13 aparecem em processos produtivos de setores muito diferentes entre si.',
   items: [
-    {
-      id: 'alimenticia',
-      icon: 'utensils',
-      label: 'Indústria Alimentícia',
-      description:
-        'Linhas de processamento e envase que exigem funcionamento contínuo, higiene e resistência à lavagem.',
-      bullets: [
-        'Linhas de envase e embalagem',
-        'Esteiras e transportadores',
-        'Misturadores e moinhos',
-      ],
-      photo: { src: seg1, alt: 'Linha de envase automatizada da indústria alimentícia' },
-    },
-    {
-      id: 'ceramica',
-      icon: 'disc',
-      label: 'Cerâmica',
-      description:
-        'Equipamentos de preparação de massa, prensagem e secagem, expostos a poeira abrasiva e altas temperaturas.',
-      bullets: ['Prensas e extrusoras', 'Moinhos e misturadores', 'Fornos e secadores'],
-      photo: { src: seg2, alt: 'Linha de produção de peças cerâmicas' },
-    },
-    {
-      id: 'usinagem',
-      icon: 'settings-2',
-      label: 'Usinagem',
-      description:
-        'Máquinas-ferramenta e centros de usinagem, onde rigidez e baixa vibração definem a qualidade da peça.',
-      bullets: ['Fusos e cabeçotes', 'Tornos e centros de usinagem', 'Retíficas e fresadoras'],
-      photo: { src: seg3, alt: 'Centro de usinagem CNC em operação' },
-    },
     {
       id: 'mineracao',
       icon: 'mountain',
       label: 'Mineração',
-      description:
-        'Cargas elevadas, impacto e contaminação em britadores, peneiras e transportadores de longa distância.',
-      bullets: ['Britadores e peneiras', 'Transportadores de correia', 'Moinhos e bombas de polpa'],
-      photo: { src: seg4, alt: 'Equipamentos de mineração em operação a céu aberto' },
+      description: 'Vasos de pressão e caldeiras em operações de beneficiamento e britagem.',
+      bullets: ['Vasos de pressão', 'Caldeiras de processo', 'Tubulações de polpa'],
+      photo: { src: seg1, alt: 'Planta de mineração com equipamentos industriais' },
     },
     {
       id: 'papel-celulose',
       icon: 'file-text',
       label: 'Papel e Celulose',
-      description:
-        'Máquinas de papel, refinadores e secadores, em ambientes úmidos e com operação ininterrupta.',
-      bullets: ['Máquinas de papel', 'Refinadores e desagregadores', 'Secadores e calandras'],
-      photo: { src: seg5, alt: 'Máquina de papel com bobinas em fábrica de celulose' },
+      description: 'Caldeiras e vasos de pressão em ambientes úmidos e de operação contínua.',
+      bullets: ['Caldeiras de recuperação', 'Vasos de pressão', 'Tubulações de vapor'],
+      photo: { src: seg2, alt: 'Fábrica de papel e celulose com caldeiras' },
     },
     {
-      id: 'siderurgia',
+      id: 'quimica-petroquimica',
+      icon: 'droplet',
+      label: 'Química e Petroquímica',
+      description: 'Vasos com fluidos classe A e sistemas de tubulações de alta exigência.',
+      bullets: ['Vasos com fluidos classe A', 'Tubulações de processo', 'Tanques de armazenamento'],
+      photo: { src: seg3, alt: 'Planta química com vasos de pressão e tubulações' },
+    },
+    {
+      id: 'alimentos-bebidas',
+      icon: 'utensils',
+      label: 'Alimentos e Bebidas',
+      description: 'Caldeiras e vasos de pressão em linhas de processamento e envase.',
+      bullets: ['Caldeiras de processo', 'Vasos de pressão', 'Tubulações de vapor'],
+      photo: { src: seg4, alt: 'Linha de processamento de alimentos com caldeiras' },
+    },
+    {
+      id: 'siderurgia-metalurgia',
       icon: 'flame',
-      label: 'Siderurgia',
-      description:
-        'Laminadores, lingotamento e fornos, dimensionados para altas temperaturas e cargas extremas.',
-      bullets: ['Laminadores e cadeiras', 'Lingotamento contínuo', 'Pontes rolantes e fornos'],
-      photo: { src: seg6, alt: 'Laminação de aço incandescente em siderúrgica' },
+      label: 'Siderurgia e Metalurgia',
+      description: 'Equipamentos sob altas temperaturas e cargas extremas de operação.',
+      bullets: ['Caldeiras e fornos', 'Vasos de pressão', 'Tubulações de processo'],
+      photo: { src: seg5, alt: 'Siderúrgica com caldeiras e vasos de pressão' },
     },
     {
-      id: 'automacao',
-      icon: 'cpu',
-      label: 'Automação Industrial',
-      description:
-        'Sistemas automatizados, robótica e movimentação, com foco em precisão e baixa manutenção.',
-      bullets: [
-        'Esteiras e sistemas de movimentação',
-        'Robôs e manipuladores',
-        'Motorredutores e acionamentos',
-      ],
-      photo: { src: seg7, alt: 'Robôs industriais em célula automatizada' },
+      id: 'geracao-energia',
+      icon: 'zap',
+      label: 'Geração de Energia',
+      description: 'Caldeiras e vasos de pressão em usinas e termelétricas.',
+      bullets: ['Caldeiras de geração', 'Vasos de pressão', 'Tubulações de alta pressão'],
+      photo: { src: seg6, alt: 'Usina de geração de energia com caldeiras' },
+    },
+    {
+      id: 'hospitais-clinicas',
+      icon: 'cylinder',
+      label: 'Hospitais e Clínicas',
+      description: 'Autoclaves e vasos de pressão usados em esterilização.',
+      bullets: ['Autoclaves', 'Vasos de pressão', 'Tubulações de vapor'],
+      photo: { src: seg7, alt: 'Autoclave hospitalar em central de esterilização' },
     },
     {
       id: 'outras',
       icon: 'more-horizontal',
       label: 'Outras Aplicações Industriais',
       description:
-        'Não encontrou o seu segmento? Atendemos diferentes processos industriais com apoio técnico na identificação e especificação.',
-      bullets: ['Apoio na identificação', 'Múltiplas marcas e soluções', 'Atendimento B2B'],
-      photo: { src: seg8, alt: 'Planta industrial com diferentes equipamentos e aplicações' },
+        'Não encontrou o seu segmento? Atendemos diferentes indústrias com equipamentos enquadrados na NR13.',
+      bullets: [
+        'Diagnóstico gratuito',
+        'Engenharia multidisciplinar',
+        'Atendimento em todo o Brasil',
+      ],
+      photo: {
+        src: seg8,
+        alt: 'Planta industrial com diferentes equipamentos enquadrados na NR13',
+      },
     },
   ],
 } as const satisfies {
@@ -368,38 +359,38 @@ export const segments = {
 export const why = {
   eyebrow: `Por que a ${site.brandShort}`,
   /** Cada item é uma linha do H2 (quebra forçada). 3–6 palavras no total. */
-  titleLines: ['Seu equipamento', 'não pode parar.'],
-  text: `Mais que produtos, parceria para a sua operação. Conte com a ${site.brandShort} para identificar, especificar e fornecer o componente correto, com atendimento B2B e foco em manter a sua indústria em movimento.`,
-  scene: { src: cenario, alt: 'Produtos industriais e instrumentos sobre bancada de manutenção' },
+  titleLines: ['Segurança e conformidade', 'com a NR13.'],
+  text: `Mais que um laudo, parceria para manter sua operação segura e em conformidade. Conte com a ${site.brandShort} para levantar, projetar, executar e acompanhar a adequação dos seus equipamentos à NR13.`,
+  scene: { src: cenario, alt: 'Equipamentos e instrumentos técnicos de inspeção industrial' },
   person: {
     src: pessoa,
-    alt: `Técnico da ${site.brandShort} de braços cruzados`,
+    alt: `Engenheiro da ${site.brandShort} de braços cruzados`,
   },
   reasons: [
     {
-      icon: 'search',
-      title: 'Apoio na identificação',
-      description: 'Encontre o produto certo com apoio técnico.',
-    },
-    {
-      icon: 'sliders',
-      title: 'Orientação de especificação',
-      description: 'A melhor solução para a sua aplicação.',
+      icon: 'shield',
+      title: 'Especialização em NR13',
+      description: 'Atuação especializada em Adequação NR13.',
     },
     {
       icon: 'layers',
-      title: 'Múltiplas marcas e soluções',
-      description: 'As principais marcas e soluções do mercado.',
+      title: 'Experiência desde 1991',
+      description: 'Mais de três décadas em engenharia industrial.',
     },
     {
-      icon: 'users',
-      title: 'Atendimento B2B especializado',
-      description: 'Foco em empresas e equipes de manutenção.',
+      icon: 'gear',
+      title: 'Engenharia multidisciplinar',
+      description: 'Experiência em engenharia mecânica, civil e elétrica.',
     },
     {
-      icon: 'wrench',
-      title: 'Solução para manutenção',
-      description: 'Mais disponibilidade e menos paradas.',
+      icon: 'file-text',
+      title: 'Documentação técnica completa',
+      description: 'Laudo e documentação prontos para fiscalização e auditorias.',
+    },
+    {
+      icon: 'zap',
+      title: 'Atendimento ágil',
+      description: 'Equipe pronta para agir dentro do prazo combinado.',
     },
   ],
 } as const satisfies {
@@ -416,11 +407,11 @@ export const why = {
 export const quote = {
   eyebrow: 'Solicite sua cotação',
   title: `Fale com quem entende de ${site.product.toLowerCase()}.`,
-  text: 'Nossa equipe está pronta para identificar, especificar e cotar o produto certo para a sua aplicação. Preencha o formulário ou fale direto conosco pelo WhatsApp.',
+  text: 'Nossa equipe está pronta para levantar, projetar e executar a adequação dos seus equipamentos à NR13. Preencha o formulário ou fale direto conosco pelo WhatsApp.',
   trust: [
-    { icon: 'clock', label: 'Resposta rápida' },
-    { icon: 'shield', label: 'Apoio técnico especializado' },
-    { icon: 'map-pin', label: 'Atendimento em todo o Brasil' },
+    { icon: 'shield', label: 'Especialistas em Adequação NR13' },
+    { icon: 'clock', label: 'Fundada em 1991' },
+    { icon: 'gear', label: 'Engenharia mecânica, civil e elétrica' },
   ],
   /** Nota de LGPD exibida abaixo do formulário. */
   lgpd: `Seus dados são usados apenas para responder à sua solicitação de cotação, conforme a LGPD.`,
