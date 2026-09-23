@@ -2,14 +2,18 @@
 
 /* ---------------------------------------------------------------------------
    Tokens do padrão B2 (PROMPT-PADRAO-LP, item 2).
-   Só altere os valores se a entrevista (entrada 21) trouxer cores/fonte do cliente.
+   Cores do cliente (entrada 21): extraídas do logo da Vazão (azul e vermelho),
+   substituindo apenas os valores — os nomes das variáveis/classes (accent-orange
+   etc.) permanecem por padrão do sistema, mesmo carregando outra cor agora.
+   primary-dark deriva do azul do logo (#0088d0), escurecido para funcionar como
+   fundo (header, hero, footer); accent-orange deriva do vermelho do logo (#982828).
    --------------------------------------------------------------------------- */
 @theme {
-  --color-primary-dark: #002147;
-  --color-primary-dark-800: #003669;
-  --color-primary-dark-900: #001830;
-  --color-accent-orange: #ff6b00;
-  --color-accent-orange-dark: #e55f00;
+  --color-primary-dark: #002f47;
+  --color-primary-dark-800: #004366;
+  --color-primary-dark-900: #001e2e;
+  --color-accent-orange: #c23333;
+  --color-accent-orange-dark: #a12b2b;
   --color-neutral-light: #ffffff;
   --color-neutral-gray-100: #f5f7fa;
   --color-neutral-gray-200: #a0a0a0;

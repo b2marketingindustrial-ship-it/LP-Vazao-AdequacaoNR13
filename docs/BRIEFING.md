@@ -58,13 +58,13 @@ Esta LP é do tipo **serviço industrial** (item 3.1 do PROMPT-PADRAO-LP): seç�
 | 18  | WHATSAPP                                          | confirmado | Sem botão flutuante                                                                                                                                                                      | resposta do usuário na entrevista                                                                                                                 |
 | 19  | STACK                                             | confirmado | Astro 7 + Tailwind 4                                                                                                                                                                     | detectado no template, confirmado pelo usuário                                                                                                    |
 | 20  | BRANCH_PRINCIPAL + PUBLICACAO                     | confirmado | `main` + `.github/workflows/build-wp.yml` → branch `wp-build`                                                                                                                            | detectado no template, confirmado pelo usuário                                                                                                    |
-| 21  | TOKENS_DE_COR + FONTE                             | pendência  | Cores do cliente (azul/vermelho) — hex a extrair do arquivo do logo; fonte padrão (Manrope)                                                                                              | usuário optou por extrair o hex do arquivo do logo quando anexado (ainda não está em `src/assets/`)                                               |
+| 21  | TOKENS_DE_COR + FONTE                             | confirmado | Azul `#0088d0` → navy derivado `#002f47`/`#004366`/`#001e2e` (primary-dark); Vermelho `#982828` → `#c23333`/`#a12b2b` (accent); fonte padrão Manrope                                     | hex extraído por amostragem de pixel de `src/assets/LOGO.png` (logo anexado pelo usuário); aplicado em `src/styles/global.css`                    |
 
 ## Assets
 
 | Asset                            | Arquivo esperado                                             | Status        | Observação                                                                                               |
 | -------------------------------- | ------------------------------------------------------------ | ------------- | -------------------------------------------------------------------------------------------------------- |
-| Logo                             | `src/assets/LOGO.png` (240×200, fundo transparente)          | pendência     | logo_vazao citado no briefing, arquivo ainda não copiado para `src/assets/`                              |
+| Logo                             | `src/assets/LOGO.png` (738×240, fundo branco)                | anexado       | logo real da Vazão aplicado no Header e usado para extrair os tokens de cor                              |
 | Banner do hero                   | `src/assets/heroBg.png` (1981×900, brief 4.1.3)              | pendência     | nenhuma imagem do briefing atende ao brief do hero                                                       |
 | Serviços (3–4)                   | `src/assets/products/*.png` (recorte 800×600) + `marcas.png` | pendência     | seção "Serviços" ainda sem conteúdo definido                                                             |
 | Onde atuamos / Aplicações (4)    | `src/assets/applications/*.png` (1200×900)                   | pendência     | 3 imagens citadas (instalacao_01, vaso_pressao_02, tubulacoes_03) + 1 ausente (Tanques de Armazenamento) |
@@ -83,6 +83,6 @@ Todas as fotos acima ainda usam os placeholders do template (mesmo aspect-ratio 
 ### Pendências para o cliente antes do publish
 
 1. **URL final** da página (entrada 15).
-2. **Hex das cores da marca** — anexar o arquivo do logo em `src/assets/LOGO.png` para extração.
-3. **Assets reais**: logo, banner do hero (brief 4.1.3), fotos de Serviços/Onde atuamos/Segmentos/Diferenciais.
-4. **Revisar com o cliente** os itens sugeridos pelo agente (não extraídos do briefing original): os 4 serviços, as etapas 2–6 de "Como funciona", os 7 segmentos e os 2 diferenciais extras (entradas 7, 8, 10, 11).
+2. **Assets reais**: banner do hero (brief 4.1.3), fotos de Serviços/Onde atuamos/Segmentos/Diferenciais (logo já aplicado).
+3. **Revisar com o cliente** os itens sugeridos pelo agente (não extraídos do briefing original): os 4 serviços, as etapas 2–6 de "Como funciona", os 7 segmentos e os 2 diferenciais extras (entradas 7, 8, 10, 11).
+4. **Validar as cores derivadas** (`#002f47` navy, `#c23333` vermelho) com o cliente — foram calculadas a partir do logo, não fornecidas como manual de marca.
