@@ -19,25 +19,25 @@ import type { ImageMetadata } from 'astro'
 import type { IconName } from './icons'
 import { site } from './site'
 
-import heroBg from '../assets/heroBg.png'
-import servico1 from '../assets/products/linha-1.png'
-import servico2 from '../assets/products/linha-2.png'
-import servico3 from '../assets/products/linha-3.png'
-import servico4 from '../assets/products/marcas.png'
-import app1 from '../assets/applications/aplicacao-1.png'
-import app2 from '../assets/applications/aplicacao-2.png'
-import app3 from '../assets/applications/aplicacao-3.png'
-import app4 from '../assets/applications/aplicacao-4.png'
-import seg1 from '../assets/segmentos/segmento-1.png'
-import seg2 from '../assets/segmentos/segmento-2.png'
-import seg3 from '../assets/segmentos/segmento-3.png'
-import seg4 from '../assets/segmentos/segmento-4.png'
-import seg5 from '../assets/segmentos/segmento-5.png'
-import seg6 from '../assets/segmentos/segmento-6.png'
-import seg7 from '../assets/segmentos/segmento-7.png'
-import seg8 from '../assets/segmentos/segmento-8.png'
-import cenario from '../assets/cenario.jpg'
-import pessoa from '../assets/pessoa.png'
+import heroBg from '../assets/generated/hero-nr13.png'
+import servico1 from '../assets/generated/service-inspection.png'
+import servico2 from '../assets/generated/service-design.png'
+import servico3 from '../assets/generated/service-execution.png'
+import servico4 from '../assets/generated/service-recertification.png'
+import app1 from '../assets/generated/application-pressure-vessel.png'
+import app2 from '../assets/generated/application-boiler.png'
+import app3 from '../assets/generated/application-piping.png'
+import app4 from '../assets/generated/application-storage-tanks.png'
+import seg1 from '../assets/generated/segment-mining.png'
+import seg2 from '../assets/generated/segment-pulp-paper.png'
+import seg3 from '../assets/generated/segment-petrochemical.png'
+import seg4 from '../assets/generated/segment-food-beverage.png'
+import seg5 from '../assets/generated/segment-steel.png'
+import seg6 from '../assets/generated/segment-energy.png'
+import seg7 from '../assets/generated/segment-healthcare.png'
+import seg8 from '../assets/generated/segment-industrial.png'
+import cenario from '../assets/generated/why-scene.png'
+import pessoa from '../assets/generated/why-engineer.png'
 
 /* ------------------------------------------------------------------ tipos */
 
@@ -406,7 +406,7 @@ export const why = {
 
 export const quote = {
   eyebrow: 'Solicite sua cotação',
-  title: `Fale com quem entende de ${site.product.toLowerCase()}.`,
+  title: `Fale com quem entende de ${site.product.replace('Serviços', 'serviços')}.`,
   text: 'Nossa equipe está pronta para levantar, projetar e executar a adequação dos seus equipamentos à NR13. Preencha o formulário ou fale direto conosco pelo WhatsApp.',
   trust: [
     { icon: 'shield', label: 'Especialistas em Adequação NR13' },

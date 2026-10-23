@@ -49,11 +49,7 @@ const lines = productLines.items
               width={line.dark ? 640 : 360}
               loading="lazy"
               decoding="async"
-              class:list={[
-                line.dark
-                  ? 'absolute inset-0 z-[1] h-full w-full object-contain object-center transition-transform duration-500 ease-out group-hover:scale-[1.04]'
-                  : 'relative z-[1] max-h-[7.75rem] w-auto max-w-[78%] object-contain mix-blend-multiply transition-transform duration-500 ease-out group-hover:-rotate-2 group-hover:scale-[1.07]',
-              ]}
+              class="absolute inset-0 z-[1] h-full w-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.04]"
             />
 
             <span class="absolute top-4 left-4 z-[2] font-display text-[11px] font-extrabold tracking-[0.2em] text-primary-dark/40">
@@ -64,12 +60,6 @@ const lines = productLines.items
               {line.tag}
             </span>
 
-            {!line.dark && (
-              <span
-                aria-hidden="true"
-                class="absolute bottom-3 left-1/2 h-4 w-28 -translate-x-1/2 rounded-[100%] bg-primary-dark/20 opacity-50 blur-md transition-opacity duration-500 group-hover:opacity-90"
-              />
-            )}
           </div>
 
           {/* Conteúdo */}
